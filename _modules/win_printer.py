@@ -13,7 +13,7 @@ from __future__ import absolute_import
 import salt.utils
 
 # Define the module's virtual name
-__virtualname__ = 'win_printer_port'
+__virtualname__ = 'win_printer'
 
 
 def __virtual__():
@@ -22,7 +22,7 @@ def __virtual__():
     '''
     if salt.utils.is_windows():
         return __virtualname__
-    return (False, 'Module win_printer_port: module only works on Windows systems')
+    return (False, 'Module win_printer: module only works on Windows systems')
 
 
 def _srvmgr(func):
@@ -36,7 +36,7 @@ def _srvmgr(func):
         python_shell=True)
 
 
-def list_ports():
+def list_printers():
     '''
     List all installed ports
 
@@ -44,7 +44,7 @@ def list_ports():
 
     .. code-block:: bash
 
-        salt '*' win_printer_port.list_ports
+        salt '*' win_printer.list_printers
     '''
     pscmd = []
     pscmd.append(r'Get-WebSite -erroraction silentlycontinue -warningaction silentlycontinue')
@@ -56,7 +56,7 @@ def list_ports():
     return _srvmgr(command)
 
 
-def create_port(
+def create_printer(
         name,
         protocol,
         sourcepath,
@@ -71,7 +71,7 @@ def create_port(
 
     .. code-block:: bash
 
-        salt '*' win_printer_port.create_port name='My Test Site' protocol='http' sourcepath='c:\\stage' port='80' apppool='TestPool'
+        salt '*' win_printer.create_printer name='My Test Site' protocol='http' sourcepath='c:\\stage' port='80' apppool='TestPool'
 
     '''
 
@@ -90,7 +90,7 @@ def create_port(
     return _srvmgr(command)
 
 
-def remove_port(name):
+def remove_printer(name):
     '''
     Delete printer port
 
@@ -98,7 +98,7 @@ def remove_port(name):
 
     .. code-block:: bash
 
-        salt '*' win_printer_port.remove_port name='My Test Site'
+        salt '*' win_printer.remove_printer name='My Test Site'
 
     '''
 
@@ -108,3 +108,11 @@ def remove_port(name):
 
     command = ''.join(pscmd)
     return _srvmgr(command)
+
+
+def update_printer(name, **todo):
+    '''
+    Update a printer port
+    '''
+
+    return 'TODO'
